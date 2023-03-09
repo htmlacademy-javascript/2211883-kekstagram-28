@@ -3,9 +3,9 @@ function checkStringLenght(string, charsCount) {
   return string.length <= charsCount;
 }
 
-// console.log(checkStringLenght('проверяемая строка', 20));
-// console.log(checkStringLenght('проверяемая строка', 18));
-// console.log(checkStringLenght('проверяемая строка', 10));
+checkStringLenght('проверяемая строка', 20);
+checkStringLenght('проверяемая строка', 18);
+checkStringLenght('проверяемая строка', 10);
 
 /**
  * Функция для проверки, является ли строка палиндромом.
@@ -16,9 +16,9 @@ function isPalindrome(string) {
   return string.split('').reverse().join('') === string;
 }
 
-// console.log(isPalindrome('топот'));
-// console.log(isPalindrome('ДовОд'));
-// console.log(isPalindrome('Кекс'));
+isPalindrome('топот');
+isPalindrome('ДовОд');
+isPalindrome('Кекс');
 
 /**
  * Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого
@@ -35,11 +35,11 @@ function getNumbers(value) {
   return parseInt(result, 10);
 }
 
-// console.log(getNumbers('2023 год'));
-// console.log(getNumbers('ECMAScript 2022'));
-// console.log(getNumbers('1 кефир, 0.5 батона'));
-// console.log(getNumbers('агент 007'));
-// console.log(getNumbers('а я томат'));
+getNumbers('2023 год');
+getNumbers('ECMAScript 2022');
+getNumbers('1 кефир, 0.5 батона');
+getNumbers('агент 007');
+getNumbers('а я томат');
 
 /**
  * Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами.
@@ -63,12 +63,12 @@ function padLine(string, minLenght, addString) {
 }
 
 // Добавочный символ использован один раз
-// console.log(padLine('1', 2, '0'));
+padLine('1', 2, '0');
 // Добавочный символ использован три раза
-// console.log(padLine('1', 4, '0'));
+padLine('1', 4, '0');
 // Добавочные символы обрезаны с конца
-// console.log(padLine('q', 4, 'werty'));
+padLine('q', 4, 'werty');
 // Добавочные символы использованы полтора раза
-// console.log(padLine('q', 4, 'we'));
+padLine('q', 4, 'we');
 // Добавочные символы не использованы, исходная строка не изменена
-// console.log(padLine('qwerty', 4, '0'));
+padLine('qwerty', 4, '0');
