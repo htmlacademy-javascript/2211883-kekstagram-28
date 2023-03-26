@@ -34,7 +34,7 @@ const DESCRIPTION = [
 const createComment = (index) => {
   const randomNameIndex = getRandomInteger(0, NAMES.length - 1);
   const randomMessageIndex = getRandomInteger(0, MESSAGE.length - 1);
-  const randomInt = getRandomInteger(0, 6);
+  const randomInt = getRandomInteger(1, 6);
 
   return {
     id: index,
