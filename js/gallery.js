@@ -8,7 +8,7 @@ const renderGallery = (pictures) => {
     if (!miniatures) {
       return;
     }
-
+    evt.preventDefault();
     const picture = pictures.find(
       (item) => item.id === +miniatures.dataset.miniaturesId
     );
