@@ -6,6 +6,10 @@ const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
 const COMMENT_MAX_LENGHT = 140;
 const COMMENT_ERROR_TEXT = 'Комментарий не может быть длиннее 140 символов';
+const SubmitButtonText = {
+  SUBMITTING: 'Публикация поста...',
+  IDLE: 'Опубликовать',
+};
 
 const form = document.querySelector('.img-upload__form');
 const overlay = document.querySelector('.img-upload__overlay');
@@ -15,6 +19,8 @@ const fileField = document.querySelector('#upload-file');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 const submitButton = document.querySelector('.img-upload__submit');
+
+let isMessageShowed = false;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -43,11 +49,15 @@ const isTextFiledFocused = () =>
   document.activeElement === commentField;
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape' && !isTextFiledFocused()) {
+  if (evt.key === 'Escape' && !isTextFiledFocused() && !isMessageShowed) {
     evt.preventDefault();
     hideModal();
   }
 }
+
+const setIsMessageShowed = (value) => {
+  isMessageShowed = !!value;
+};
 
 const onCancelButtonClick = () => {
   hideModal();
@@ -94,6 +104,35 @@ const onFormSubmit = (evt) => {
   }
 };
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SUBMITTING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+pristine.addValidator(hashtagField, validateTags, TAG_ERROR_TEXT);
+
+const setOnFormSubmit = (callback) => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      blockSubmitButton();
+      await callback(new FormData(form));
+      unblockSubmitButton();
+    }
+  });
+};
+
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
 submitButton.addEventListener('click', onFormSubmit);
+
+export { setOnFormSubmit };
+export { hideModal };
+export { setIsMessageShowed };

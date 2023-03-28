@@ -1,4 +1,5 @@
 import { showBigPicture } from './big-picture.js';
+import { renderMiniatures } from './miniatures.js';
 
 const container = document.querySelector('.pictures');
 
@@ -14,6 +15,9 @@ const renderGallery = (pictures) => {
     );
     showBigPicture(picture);
   });
+
+  renderMiniatures(pictures, container);
 };
+
 
 export { renderGallery };
