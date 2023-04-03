@@ -1,7 +1,6 @@
 const miniaturesTemplate = document
   .querySelector('#picture')
   .content.querySelector('.picture');
-const container = document.querySelector('.pictures');
 
 const creatMiniatures = ({ comments, description, likes, url, id }) => {
   const miniatures = miniaturesTemplate.cloneNode(true);
@@ -15,7 +14,8 @@ const creatMiniatures = ({ comments, description, likes, url, id }) => {
   return miniatures;
 };
 
-const renderMiniatures = (pictures) => {
+const renderMiniatures = (pictures, container) => {
+  container.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const miniatures = creatMiniatures(picture);
