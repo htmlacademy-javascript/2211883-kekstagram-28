@@ -1,8 +1,8 @@
 import { setIsMessageShowed } from './form.js';
 
-const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-const body = document.querySelector('body');
+const successMessageTemplateElement = document.querySelector('#success').content.querySelector('.success');
+const errorMessageTemplateElement = document.querySelector('#error').content.querySelector('.error');
+const bodyElement = document.querySelector('body');
 
 const errorMessageTexts = {
   TITLE: 'Ошибка загрузки файла',
@@ -16,7 +16,7 @@ const successMessageTexts = {
 let currentMessage;
 
 const createSuccessMessage = () => {
-  const successMessage = successMessageTemplate.cloneNode(true);
+  const successMessage = successMessageTemplateElement.cloneNode(true);
 
   successMessage.querySelector('.success__title').textContent = successMessageTexts.TITLE;
   successMessage.querySelector('.success__button').textContent = successMessageTexts.BUTTON;
@@ -25,7 +25,7 @@ const createSuccessMessage = () => {
 };
 
 const createErrorMessage = () => {
-  const successMessage = errorMessageTemplate.cloneNode(true);
+  const successMessage = errorMessageTemplateElement.cloneNode(true);
 
   successMessage.querySelector('.error__title').textContent = errorMessageTexts.TITLE;
   successMessage.querySelector('.error__button').textContent = errorMessageTexts.BUTTON;
@@ -55,7 +55,7 @@ function onDocumentClick(event) {
 
 const showMessage = (message) => {
   currentMessage = message;
-  body.append(currentMessage);
+  bodyElement.append(currentMessage);
   setIsMessageShowed(true);
   currentMessage.querySelector('button').addEventListener('click', () => closeMessage(currentMessage));
   document.addEventListener('keydown', onDocumentKeydown);
