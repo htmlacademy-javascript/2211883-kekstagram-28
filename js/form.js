@@ -11,42 +11,42 @@ const SubmitButtonText = {
   IDLE: 'Опубликовать',
 };
 
-const form = document.querySelector('.img-upload__form');
-const overlay = document.querySelector('.img-upload__overlay');
-const body = document.querySelector('body');
-const cancelButton = document.querySelector('#upload-cancel');
-const fileField = document.querySelector('#upload-file');
-const hashtagField = document.querySelector('.text__hashtags');
-const commentField = document.querySelector('.text__description');
-const submitButton = document.querySelector('.img-upload__submit');
+const formElement = document.querySelector('.img-upload__form');
+const overlayElement = document.querySelector('.img-upload__overlay');
+const bodyElement = document.querySelector('body');
+const cancelButtonElement = document.querySelector('#upload-cancel');
+const fileFieldElement = document.querySelector('#upload-file');
+const hashtagFieldElement = document.querySelector('.text__hashtags');
+const commentFieldElement = document.querySelector('.text__description');
+const submitButtonElement = document.querySelector('.img-upload__submit');
 
 let isMessageShowed = false;
 
-const pristine = new Pristine(form, {
+const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__error',
 });
 
 const showModal = () => {
-  overlay.classList.remove('hidden');
-  body.classList.add('modal-open');
+  overlayElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const hideModal = () => {
-  form.reset();
+  formElement.reset();
   resetScale ();
   resetEffects();
   pristine.reset();
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  overlayElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const isTextFiledFocused = () =>
-  document.activeElement === hashtagField ||
-  document.activeElement === commentField;
+  document.activeElement === hashtagFieldElement ||
+  document.activeElement === commentFieldElement;
 
 function onDocumentKeydown(evt) {
   if (evt.key === 'Escape' && !isTextFiledFocused() && !isMessageShowed) {
@@ -87,13 +87,13 @@ const validateTags = (value) => {
 const validateComment = (value) => value.length <= COMMENT_MAX_LENGHT;
 
 pristine.addValidator(
-  hashtagField,
+  hashtagFieldElement,
   validateTags,
   TAG_ERROR_TEXT
 );
 
 pristine.addValidator(
-  commentField,
+  commentFieldElement,
   validateComment,
   COMMENT_ERROR_TEXT
 );
@@ -105,34 +105,30 @@ const onFormSubmit = (evt) => {
 };
 
 const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SUBMITTING;
+  submitButtonElement.disabled = true;
+  submitButtonElement.textContent = SubmitButtonText.SUBMITTING;
 };
 
 const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+  submitButtonElement.disabled = false;
+  submitButtonElement.textContent = SubmitButtonText.IDLE;
 };
 
-pristine.addValidator(hashtagField, validateTags, TAG_ERROR_TEXT);
-
 const setOnFormSubmit = (callback) => {
-  form.addEventListener('submit', async (evt) => {
+  formElement.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
 
     if (isValid) {
       blockSubmitButton();
-      await callback(new FormData(form));
+      await callback(new FormData(formElement));
       unblockSubmitButton();
     }
   });
 };
 
-fileField.addEventListener('change', onFileInputChange);
-cancelButton.addEventListener('click', onCancelButtonClick);
-submitButton.addEventListener('click', onFormSubmit);
+fileFieldElement.addEventListener('change', onFileInputChange);
+cancelButtonElement.addEventListener('click', onCancelButtonClick);
+submitButtonElement.addEventListener('click', onFormSubmit);
 
-export { setOnFormSubmit };
-export { hideModal };
-export { setIsMessageShowed };
+export { setOnFormSubmit, hideModal, setIsMessageShowed };

@@ -1,11 +1,11 @@
 const COMMENTS_PER_PORTION = 5;
 
-const bigPicture = document.querySelector('.big-picture');
-const commentCount = document.querySelector('.social__comment-count');
-const commentList = document.querySelector('.social__comments');
-const commentsLoader = document.querySelector ('.comments-loader');
-const body = document.querySelector ('body');
-const cancelButton = document.querySelector('.big-picture__cancel');
+const bigPictureElement = document.querySelector('.big-picture');
+const commentCountElement = document.querySelector('.social__comment-count');
+const commentListElement = document.querySelector('.social__comments');
+const commentsLoaderElement = document.querySelector ('.comments-loader');
+const bodyElement = document.querySelector ('body');
+const cancelButtonElement = document.querySelector('.big-picture__cancel');
 
 let commentsShown = 0;
 let pictureData;
@@ -26,10 +26,10 @@ const renderComments = (comments) => {
   commentsShown += COMMENTS_PER_PORTION;
 
   if (commentsShown >= comments.length) {
-    commentsLoader.classList.add('hidden');
+    commentsLoaderElement.classList.add('hidden');
     commentsShown = comments.length;
   } else {
-    commentsLoader.classList.remove('hidden');
+    commentsLoaderElement.classList.remove('hidden');
   }
 
   const fragment = document.createDocumentFragment();
@@ -38,14 +38,14 @@ const renderComments = (comments) => {
     fragment.append(commentElement);
   }
 
-  commentList.innerHTML = '';
-  commentList.append(fragment);
-  commentCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментарии`;
+  commentListElement.innerHTML = '';
+  commentListElement.append(fragment);
+  commentCountElement.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментарии`;
 };
 
 const hideBigPicture = () => {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
+  bigPictureElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   commentsShown = 0;
 };
@@ -66,23 +66,23 @@ const onCommentsLoaderClick = () => {
 };
 
 const renderPictureDetalis = ({ url, likes, description }) => {
-  bigPicture.querySelector('.big-picture__img img').src = url;
-  bigPicture.querySelector('.big-picture__img img').alt = description;
-  bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.social__caption').textContent = description;
+  bigPictureElement.querySelector('.big-picture__img img').src = url;
+  bigPictureElement.querySelector('.big-picture__img img').alt = description;
+  bigPictureElement.querySelector('.likes-count').textContent = likes;
+  bigPictureElement.querySelector('.social__caption').textContent = description;
 };
 
 const showBigPicture = (data) => {
   pictureData = data;
-  bigPicture.classList.remove('hidden');
-  body.classList.add('modal-open');
+  bigPictureElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 
   renderPictureDetalis(data);
   renderComments(data.comments);
 };
 
-cancelButton.addEventListener('click', onCancelButtonClick);
-commentsLoader.addEventListener('click', onCommentsLoaderClick);
+cancelButtonElement.addEventListener('click', onCancelButtonClick);
+commentsLoaderElement.addEventListener('click', onCommentsLoaderClick);
 
 export { showBigPicture};
